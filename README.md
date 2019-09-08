@@ -1,3 +1,3 @@
 # PGM
 
-This repository contains the assigments relative to the probabilistic grafical models specialization 
+This repository contains the assignments relative to the probabilistic grafical models specialization 
