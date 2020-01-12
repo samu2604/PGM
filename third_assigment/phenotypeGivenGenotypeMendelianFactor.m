@@ -36,12 +36,63 @@ phenotypeFactor = struct('var', [], 'card', [], 'val', []);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %INSERT YOUR CODE HERE
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 % Fill in phenotypeFactor.var.  This should be a 1-D row vector.
 % Fill in phenotypeFactor.card.  This should be a 1-D row vector.
 
+phenotypeFactor.var(1) = phenotypeVar
+phenotypeFactor.var(2) = genotypeVar 
+
+phenotypeFactor.card(1) = 2
+phenotypeFactor.card(2) = 3  
+
 phenotypeFactor.val = zeros(1, prod(phenotypeFactor.card));
+
 % Replace the zeros in phentoypeFactor.val with the correct values.
+
+trait = 1
+no_trait = 2
+
+FF = 1
+Ff = 2
+ff = 3
+
+index_vector = 1:length(phenotypeFactor.val)  
+
+assignment = IndexToAssignment(index_vector, phenotypeFactor.card)
+
+
+if isDominant
+
+  assigment_probability_one = [];
+  for i = 1:length(assignment)
+    if ((assignment(i,1) == trait) && (assignment(i,2) == FF)) || ((assignment(i,1) == trait) && (assignment(i,2) == Ff)) 
+        assigment_probability_one = [assigment_probability_one; assignment(i,:)];
+    elseif (assignment(i,1) == no_trait) && (assignment(i,2) == ff) 
+        assigment_probability_one = [assigment_probability_one; assignment(i,:)];
+    end;
+  end;
+  
+  index_prob_one = AssignmentToIndex(assigment_probability_one,  phenotypeFactor.card)
+  phenotypeFactor.val(index_prob_one) = 1
+  
+else
+
+  assigment_probability_one = [];
+  for i = 1:length(assignment)
+    if (assignment(i,1) == trait) && (assignment(i,2) == ff)
+        assigment_probability_one = [assigment_probability_one; assignment(i,:)];
+    elseif (assignment(i,1) == no_trait) && (assignment(i,2) == Ff)) || ((assignment(i,1) == no_trait) && (assignment(i,2) == ff)) 
+        assigment_probability_one = [assigment_probability_one; assignment(i,:)];
+    end;
+  end;
+  
+  index_prob_one = AssignmentToIndex(assigment_probability_one,  phenotypeFactor.card)
+  phenotypeFactor.val(index_prob_one) = 1
+
+end;
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
