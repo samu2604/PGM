@@ -83,7 +83,7 @@ else
   for i = 1:length(assignment)
     if (assignment(i,1) == trait) && (assignment(i,2) == ff)
         assigment_probability_one = [assigment_probability_one; assignment(i,:)];
-    elseif (assignment(i,1) == no_trait) && (assignment(i,2) == Ff)) || ((assignment(i,1) == no_trait) && (assignment(i,2) == ff)) 
+    elseif ((assignment(i,1) == no_trait) && (assignment(i,2) == Ff)) || ((assignment(i,1) == no_trait) && (assignment(i,2) == FF)) 
         assigment_probability_one = [assigment_probability_one; assignment(i,:)];
     end;
   end;
