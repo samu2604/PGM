@@ -31,13 +31,26 @@ phenotypeFactor = struct('var', [], 'card', [], 'val', []);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %INSERT YOUR CODE HERE
 % The number of genotypes is the length of alphaList.
-% The number of phenotypes is 2.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
 
-% Fill in phenotypeFactor.var.  This should be a 1-D row vector.
-% Fill in phenotypeFactor.card.  This should be a 1-D row vector.
+
+phenotypeFactor.var(1) = phenotypeVar;
+phenotypeFactor.var(2) = genotypeVar;
+
+% The number of phenotypes is 2.
+phenotypeFactor.card(1) = 2;
+% The number of genotypes is the length of alphaList.
+phenotypeFactor.card(2) = length(alphaList);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
 
 phenotypeFactor.val = zeros(1, prod(phenotypeFactor.card));
 % Replace the zeros in phentoypeFactor.val with the correct values.
+
+index_vector = 1:length(phenotypeFactor.val) 
+assignment = IndexToAssignment(index_vector, phenotypeFactor.card)
+
+for i = 1:length(assignment) 
+  
+end;  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
