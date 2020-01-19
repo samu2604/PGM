@@ -41,26 +41,26 @@ phenotypeFactor = struct('var', [], 'card', [], 'val', []);
 % Fill in phenotypeFactor.var.  This should be a 1-D row vector.
 % Fill in phenotypeFactor.card.  This should be a 1-D row vector.
 
-phenotypeFactor.var(1) = phenotypeVar
-phenotypeFactor.var(2) = genotypeVar 
+phenotypeFactor.var(1) = phenotypeVar;
+phenotypeFactor.var(2) = genotypeVar; 
 
-phenotypeFactor.card(1) = 2
-phenotypeFactor.card(2) = 3  
+phenotypeFactor.card(1) = 2;
+phenotypeFactor.card(2) = 3;  
 
 phenotypeFactor.val = zeros(1, prod(phenotypeFactor.card));
 
 % Replace the zeros in phentoypeFactor.val with the correct values.
 
-trait = 1
-no_trait = 2
+trait = 1;
+no_trait = 2;
 
-FF = 1
-Ff = 2
-ff = 3
+FF = 1;
+Ff = 2;
+ff = 3;
 
-index_vector = 1:length(phenotypeFactor.val)  
+index_vector = 1:length(phenotypeFactor.val);  
 
-assignment = IndexToAssignment(index_vector, phenotypeFactor.card)
+assignment = IndexToAssignment(index_vector, phenotypeFactor.card);
 
 
 if isDominant
@@ -74,8 +74,8 @@ if isDominant
     end;
   end;
   
-  index_prob_one = AssignmentToIndex(assigment_probability_one,  phenotypeFactor.card)
-  phenotypeFactor.val(index_prob_one) = 1
+  index_prob_one = AssignmentToIndex(assigment_probability_one,  phenotypeFactor.card);
+  phenotypeFactor.val(index_prob_one) = 1;
   
 else
 
@@ -88,8 +88,8 @@ else
     end;
   end;
   
-  index_prob_one = AssignmentToIndex(assigment_probability_one,  phenotypeFactor.card)
-  phenotypeFactor.val(index_prob_one) = 1
+  index_prob_one = AssignmentToIndex(assigment_probability_one,  phenotypeFactor.card);
+  phenotypeFactor.val(index_prob_one) = 1;
 
 end;
 

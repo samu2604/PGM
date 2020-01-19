@@ -23,8 +23,8 @@ phenotypeFactor_no_dominant = phenotypeGivenGenotypeMendelianFactor(isDominant, 
 alphaList = [0.8; 0.6; 0.1];
 genotypeVar = 1;
 phenotypeVar = 3;
-phenotypeFactorAlpha = struct('var', [3,1], 'card', [2,3], 'val', [0.8,0.2,0.6,0.4,0.1,0.9]); % Comment out this line for testing
-% phenotypeFactorAlpha = phenotypeGivenGenotypeFactor(alphaList, genotypeVar, phenotypeVar);
+phenotypeFactorAlpha_gt = struct('var', [3,1], 'card', [2,3], 'val', [0.8,0.2,0.6,0.4,0.1,0.9]); % Comment out this line for testing
+phenotypeFactorAlpha = phenotypeGivenGenotypeFactor(alphaList, genotypeVar, phenotypeVar);
 
 % Testing genotypeGivenAlleleFreqsFactor:
 alleleFreqs = [0.1; 0.9];

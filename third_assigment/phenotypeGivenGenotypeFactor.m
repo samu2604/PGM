@@ -46,11 +46,38 @@ phenotypeFactor.card(2) = length(alphaList);
 phenotypeFactor.val = zeros(1, prod(phenotypeFactor.card));
 % Replace the zeros in phentoypeFactor.val with the correct values.
 
-index_vector = 1:length(phenotypeFactor.val) 
-assignment = IndexToAssignment(index_vector, phenotypeFactor.card)
+index_vector = 1:length(phenotypeFactor.val); 
+assignment = IndexToAssignment(index_vector, phenotypeFactor.card);
 
-for i = 1:length(assignment) 
-  
+trait = 1;
+no_trait = 2;
+
+FF = 1;
+Ff = 2;
+ff = 3;
+
+alpha_list_index = 1;
+
+for index = 1:length(index_vector) 
+  if assignment(index) == trait
+    phenotypeFactor.val(index) = alphaList(alpha_list_index);
+  elseif assignment(index) == no_trait
+    phenotypeFactor.val(index) = 1 - alphaList(alpha_list_index);
+    alpha_list_index += 1;
+  end;
 end;  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Testing phenotypeGivenGenotypeFactor:
+%alphaList = [0.8; 0.6; 0.1];
+%genotypeVar = 1;
+%phenotypeVar = 3;
+%phenotypeFactorAlpha = struct('var', [3,1], 'card', [2,3], 'val', [0.8,0.2,0.6,0.4,0.1,0.9]); % Comment out this line for testing
+% phenotypeFactorAlpha = phenotypeGivenGenotypeFactor(alphaList, genotypeVar, phenotypeVar);
+
+
+
+
+
+
