@@ -59,7 +59,29 @@ numAlleles = length(alleleFreqs);
 % Fill in genotypeFactor.var.  This should be a 1-D row vector.
 % Fill in genotypeFactor.card.  This should be a 1-D row vector.
 
+genotypeFactor.var = genotypeVar;
+
+genotypeFactor.card = (numAlleles + 1)*numAlleles/2;
+
+
 genotypeFactor.val = zeros(1, prod(genotypeFactor.card));
 % Replace the zeros in genotypeFactor.val with the correct values.
 
+for k = 1:genotypeFactor.card
+    allele_couple = genotypesToAlleles(k,:);
+    if allele_couple(1) ~= allele_couple(2)
+    % the combinations i,j and j,i bring to the same result, so I sum together the probability of the two simmetrical 
+      genotypeFactor.val(k) = alleleFreqs(allele_couple(1))*alleleFreqs(allele_couple(2)) + alleleFreqs(allele_couple(2))*alleleFreqs(allele_couple(1));
+    else
+      genotypeFactor.val(k) = alleleFreqs(allele_couple(1))*alleleFreqs(allele_couple(1));  
+    end;  
+end;
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+
+
+
+
+
+
+
