@@ -67,9 +67,17 @@ for factor_index = 1:numPeople
     factorList(factor_index) = genotypeGivenAlleleFreqsFactor(alleleFreqs, genotypeVar);
     genotypeVar += 1;
   else
-    
-  end;
-  
+    genotypeVarParentOne = pedigree.parents(factor_index,1);
+    genotypeVarParentTwo = pedigree.parents(factor_index,2);
+    factorList(factor_index) = genotypeGivenParentsGenotypesFactor(numAlleles, genotypeVar, genotypeVarParentOne, genotypeVarParentTwo);
+  end;  
+end; 
+
+phenotypeVar = genotypeVar + 1;
+for factor_index = (numPeople + 1):2*numPeople
+    genotypeVar = phenotypeVar - numPeople;
+    factorList(factor_index) = phenotypeGivenGenotypeFactor(alphaList, genotypeVar, phenotypeVar)
+    phenotypeVar += 1;
 end;  
 
 
