@@ -61,9 +61,29 @@ numAlleles = length(alleleFreqs); % Number of alleles
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %INSERT YOUR CODE HERE
+genotypeVar = 1;
+for factor_index = 1:numPeople
+  if sum(pedigree.parents(factor_index,:)) == 0
+    factorList(factor_index) = genotypeGivenAlleleFreqsFactor(alleleFreqs, genotypeVar);
+    genotypeVar += 1;
+  else
+    
+  end;
+  
+end;  
+
+
 % Variable numbers:
 % 1 - numPeople: genotype variables
 % numPeople+1 - 2*numPeople: phenotype variables
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+% Testing constructGeneticNetwork:
+%pedigree = struct('parents', [0,0;1,3;0,0]);
+%pedigree.names = {'Ira','James','Robin'};
+%alleleFreqs = [0.1; 0.9];
+%alphaList = [0.8; 0.6; 0.1];
+%sampleFactorList = load('sampleFactorList.mat'); % Comment out this line for testing
+% sampleFactorList = constructGeneticNetwork(pedigree, alleleFreqs, alphaList);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
