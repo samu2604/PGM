@@ -110,7 +110,7 @@ end
 
 for i = 1:2*numPeople
     % Iterate through factors and make a potential for each
-    factor = factorList(i);
+    factor = factorList(i)
     fprintf(fid, '%s', 'potential (');
     firstNode = factor.var(1);
     if firstNode <= numPeople
