@@ -60,8 +60,30 @@ phenotypeFactor = struct('var', [], 'card', [], 'val', []);
 
 % Fill in phenotypeFactor.var.  This should be a 1-D row vector.
 % Fill in phenotypeFactor.card.  This should be a 1-D row vector.
+phenotypeFactor.var = [phenotypeVar, geneCopyVarOne, geneCopyVarTwo];
+
+phenotypeFactor.card = [2, numAlleles, numAlleles];
+
 
 phenotypeFactor.val = zeros(1, prod(phenotypeFactor.card));
 % Replace the zeros in phentoypeFactor.val with the correct values.
 
+for index = 1:length(phenotypeFactor.val)
+  assignment = IndexToAssignment(index, phenotypeFactor.card);
+  pheno_val = assignment(index, 1);
+  allele_1 = assignment(index, 2);
+  allele_2 = assignment(index, 3);
+  phenotypeFactor.val(index) = alphaList[allelesToGenotypes(allele_1, allele_2)];
+end;
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Testing phenotypeGivenCopiesFactor:
+%alphaListThree = [0.8; 0.6; 0.1; 0.5; 0.05; 0.01];
+%numAllelesThree = 3;
+%genotypeVarMotherCopy = 1;
+%genotypeVarFatherCopy = 2;
+%phenotypeVar = 3;
+%phenotypeFactorPar = struct('var', [3,1,2], 'card', [2,3,3], 'val', [0.8,0.2,0.6,0.4,0.1,0.9,0.6,0.4,0.5,0.5,0.05,0.95,0.1,0.9,0.05,0.95,0.01,0.99]); % Comment out this line for testing
+% phenotypeFactorPar = phenotypeGivenCopiesFactor(alphaListThree, numAllelesThree, genotypeVarMotherCopy, genotypeVarFatherCopy, phenotypeVar);
+
+

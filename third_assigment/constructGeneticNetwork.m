@@ -77,7 +77,7 @@ end;
 phenotypeVar = genotypeVar;
 for factor_index = (numPeople + 1):2*numPeople
     genotypeVar = phenotypeVar - numPeople;
-    factorList(factor_index) = phenotypeGivenGenotypeFactor(alphaList, genotypeVar, phenotypeVar)
+    factorList(factor_index) = phenotypeGivenGenotypeFactor(alphaList, genotypeVar, phenotypeVar);
     phenotypeVar += 1;
 end;  
 
@@ -86,13 +86,5 @@ end;
 % 1 - numPeople: genotype variables
 % numPeople+1 - 2*numPeople: phenotype variables
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-
-% Testing constructGeneticNetwork:
-%pedigree = struct('parents', [0,0;1,3;0,0]);
-%pedigree.names = {'Ira','James','Robin'};
-%alleleFreqs = [0.1; 0.9];
-%alphaList = [0.8; 0.6; 0.1];
-%sampleFactorList = load('sampleFactorList.mat'); % Comment out this line for testing
-% sampleFactorList = constructGeneticNetwork(pedigree, alleleFreqs, alphaList);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
