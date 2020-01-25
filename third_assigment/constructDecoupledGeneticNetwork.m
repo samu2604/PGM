@@ -76,10 +76,62 @@ numAlleles = length(alleleFreqs); % Number of alleles
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % INSERT YOUR CODE HERE
+
+[allelesToGenotypes, genotypesToAlleles] = generateAlleleGenotypeMappers(numAlleles);
+%to do: fix the var. order!!!!
+
+% first loop for the first gene copy var.
+gene_copy_1_var = 1;
+for factor_index = 1:(numPeople)
+  if sum(pedigree.parents(factor_index,:)) == 0
+    factorList(factor_index) = childCopyGivenFreqsFactor(alleleFreqs, gene_copy_1_var);
+    gene_copy_1_var += 1;
+  else
+    gene_copy_1_parent_1 = genotypesToAlleles(pedigree.parents(factor_index,1), 1);
+    gene_copy_2_parent_1 = genotypesToAlleles(pedigree.parents(factor_index,1), 2);
+    factorList(factor_index) = childCopyGivenParentalsFactor(numAlleles, gene_copy_1_var, gene_copy_1_parent_1, gene_copy_2_parent_1);
+    gene_copy_1_var += 1;
+  end;  
+end; 
+
+% second loop for the second gene copy var.
+gene_copy_2_var = gene_copy_1_var;
+for factor_index = (numPeople + 1):2*numPeople
+  if sum(pedigree.parents(factor_index - numPeople,:)) == 0
+    factorList(factor_index) = childCopyGivenFreqsFactor(alleleFreqs, gene_copy_2_var);
+    gene_copy_2_var += 1;
+  else
+    gene_copy_1_parent_2 = genotypesToAlleles(pedigree.parents(factor_index - numPeople,2), 1);
+    gene_copy_2_parent_2 = genotypesToAlleles(pedigree.parents(factor_index - numPeople, 2), 2);
+    %%genotypeVarParentTwo = pedigree.parents(factor_index,2);
+    factorList(factor_index) = childCopyGivenParentalsFactor(numAlleles, gene_copy_2_var, gene_copy_1_parent_2, gene_copy_2_parent_2);
+    gene_copy_2_var += 1;
+  end;  
+end; 
+
+% third loop for the phenotype var.
+phenotypeVar = gene_copy_2_var;
+for factor_index = (2*numPeople + 1):3*numPeople
+    geneCopyVarOne = phenotypeVar - numPeople;
+    geneCopyVarTwo = phenotypeVar - 2*numPeople;
+    factorList(factor_index) = phenotypeGivenCopiesFactor(alphaList, numAlleles, geneCopyVarOne, geneCopyVarTwo, phenotypeVar);
+    phenotypeVar += 1;
+end;  
+
+
 % Variable numbers:
 % 1 - numPeople: first parent copy of gene variables
 % numPeople+1 - 2*numPeople: second parent copy of gene variables
 % 2*numPeople+1 - 3*numPeople: phenotype variables
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+
+% Testing constructDecoupledGeneticNetwork:
+%pedigree = struct('parents', [0,0;1,3;0,0]);
+%pedigree.names = {'Ira','James','Robin'};
+%alleleFreqsThree = [0.1; 0.7; 0.2];
+%alleleListThree = {'F', 'f', 'n'};
+%alphaListThree = [0.8; 0.6; 0.1; 0.5; 0.05; 0.01];
+%sampleFactorListDecoupled = load('sampleFactorListDecoupled.mat'); % Comment out this line for testing
+% sampleFactorListDecoupled = constructDecoupledGeneticNetwork(pedigree, alleleFreqsThree, alphaListThree);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  

@@ -70,10 +70,14 @@ phenotypeFactor.val = zeros(1, prod(phenotypeFactor.card));
 
 for index = 1:length(phenotypeFactor.val)
   assignment = IndexToAssignment(index, phenotypeFactor.card);
-  pheno_val = assignment(index, 1);
-  allele_1 = assignment(index, 2);
-  allele_2 = assignment(index, 3);
-  phenotypeFactor.val(index) = alphaList[allelesToGenotypes(allele_1, allele_2)];
+  pheno_val = assignment(1);
+  allele_1 = assignment(2);
+  allele_2 = assignment(3);
+  if pheno_val == 1
+    phenotypeFactor.val(index) = alphaList(allelesToGenotypes(allele_1, allele_2));
+  elseif pheno_val == 2
+    phenotypeFactor.val(index) = 1 - alphaList(allelesToGenotypes(allele_1, allele_2));
+  end;  
 end;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
