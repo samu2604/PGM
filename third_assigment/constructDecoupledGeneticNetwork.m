@@ -77,45 +77,22 @@ numAlleles = length(alleleFreqs); % Number of alleles
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % INSERT YOUR CODE HERE
 
-[allelesToGenotypes, genotypesToAlleles] = generateAlleleGenotypeMappers(numAlleles);
-%to do: fix the var. order!!!!
-
-% first loop for the first gene copy var.
-gene_copy_1_var = 1;
+% first loop for the first and second gene copy var.
 for factor_index = 1:(numPeople)
   if sum(pedigree.parents(factor_index,:)) == 0
-    factorList(factor_index) = childCopyGivenFreqsFactor(alleleFreqs, gene_copy_1_var);
-    gene_copy_1_var += 1;
+    factorList(factor_index) = childCopyGivenFreqsFactor(alleleFreqs, factor_index);
+    factorList(factor_index + numPeople) = childCopyGivenFreqsFactor(alleleFreqs, factor_index + numPeople);
   else
-    gene_copy_1_parent_1 = genotypesToAlleles(pedigree.parents(factor_index,1), 1);
-    gene_copy_2_parent_1 = genotypesToAlleles(pedigree.parents(factor_index,1), 2);
-    factorList(factor_index) = childCopyGivenParentalsFactor(numAlleles, gene_copy_1_var, gene_copy_1_parent_1, gene_copy_2_parent_1);
-    gene_copy_1_var += 1;
-  end;  
-end; 
-
-% second loop for the second gene copy var.
-gene_copy_2_var = gene_copy_1_var;
-for factor_index = (numPeople + 1):2*numPeople
-  if sum(pedigree.parents(factor_index - numPeople,:)) == 0
-    factorList(factor_index) = childCopyGivenFreqsFactor(alleleFreqs, gene_copy_2_var);
-    gene_copy_2_var += 1;
-  else
-    gene_copy_1_parent_2 = genotypesToAlleles(pedigree.parents(factor_index - numPeople,2), 1);
-    gene_copy_2_parent_2 = genotypesToAlleles(pedigree.parents(factor_index - numPeople, 2), 2);
-    %%genotypeVarParentTwo = pedigree.parents(factor_index,2);
-    factorList(factor_index) = childCopyGivenParentalsFactor(numAlleles, gene_copy_2_var, gene_copy_1_parent_2, gene_copy_2_parent_2);
-    gene_copy_2_var += 1;
+    factorList(factor_index) = childCopyGivenParentalsFactor(numAlleles, factor_index, pedigree.parents(factor_index, 1) , pedigree.parents(factor_index, 1) + numPeople);
+    factorList(factor_index + numPeople) = childCopyGivenParentalsFactor(numAlleles, factor_index + numPeople, pedigree.parents(factor_index, 2), pedigree.parents(factor_index, 2) + numPeople);
   end;  
 end; 
 
 % third loop for the phenotype var.
-phenotypeVar = gene_copy_2_var;
 for factor_index = (2*numPeople + 1):3*numPeople
-    geneCopyVarOne = phenotypeVar - numPeople;
-    geneCopyVarTwo = phenotypeVar - 2*numPeople;
-    factorList(factor_index) = phenotypeGivenCopiesFactor(alphaList, numAlleles, geneCopyVarOne, geneCopyVarTwo, phenotypeVar);
-    phenotypeVar += 1;
+    geneCopyVarTwo = factor_index - numPeople;
+    geneCopyVarOne = factor_index - 2*numPeople;
+    factorList(factor_index) = phenotypeGivenCopiesFactor(alphaList, numAlleles, geneCopyVarOne, geneCopyVarTwo, factor_index);
 end;  
 
 
