@@ -76,10 +76,10 @@ for index = 1:length(phenotypeFactor.val)
   end;
   if assignments(index, 1) == 1
     phenotypeFactor.val(index) = computeSigmoid(z);
-  elseif assignments(index, 1) == 1
+  elseif assignments(index, 1) == 2
     phenotypeFactor.val(index) = 1 - computeSigmoid(z);
- end;
-
+  end;
+end;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Testing constructSigmoidPhenotypeFactor:
