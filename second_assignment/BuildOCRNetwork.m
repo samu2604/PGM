@@ -50,11 +50,12 @@ if (~isempty(pairwiseModel))
     % implementation (which you must provide.
     %%%%%%%%%%%%%%%%%%%%%%%%%%%
     
-    pairwiseFactors = ComputeEqualPairwiseFactors(images, imageModel.K);
-    %pairwiseFactors = ComputePairwiseFactors(images, pairwiseModel, imageModel.K);
+    %pairwiseFactors = ComputeEqualPairwiseFactors(images, imageModel.K);
+    pairwiseFactors = ComputePairwiseFactors(images, pairwiseModel, imageModel.K);
 else
     pairwiseFactors = [];
 end
+
 
 if (~isempty(tripletList))  
     tripletFactors = ComputeTripletFactors(images, tripletList, imageModel.K);
