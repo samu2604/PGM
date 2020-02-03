@@ -22,5 +22,21 @@ factor = struct('var', [], 'card', [], 'val', []);
 
 % Your code here:
 
+factor.var(1) = i; % 'i' and 'j' index the caracters in the word's images array 'images'
+factor.var(2) = j;
+
+factor.card(1) = K;
+factor.card(2) = K;
+
+assignments = IndexToAssignment(1:(K*K), [K ,K]);
+
+factor.val(1:prod(factor.card)) = 1;
+
+for index = 1:length(assignments)
+  if assignments(index, 1) == assignments(index, 2)
+    factor.val(index) = ImageSimilarity(images(i).img, images(j).img);
+  end;
+end;
+
 end
 

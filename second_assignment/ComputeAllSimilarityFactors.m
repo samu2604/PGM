@@ -15,11 +15,18 @@ function factors = ComputeAllSimilarityFactors (images, K)
 % Copyright (C) Daphne Koller, Stanford University, 2012
 
 n = length(images);
-nFactors = nchoosek (n, 2);
+nFactors = nchoosek (n, 2); % binomial coefficient
 
 factors = repmat(struct('var', [], 'card', [], 'val', []), nFactors, 1);
 
 % Your code here:
+index = 1
+for i=1:n-1
+   for j =i+1:n
+     factors(index) = ComputeSimilarityFactor (images, K, i, j);
+     index += 1;
+   end;
+end;
 
 end
 
