@@ -19,6 +19,16 @@ function EU = SimpleCalcExpectedUtility(I)
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %
   % YOUR CODE HERE
+  non_parents_U = setdiff(unique([F(:).var]), [U.var]);
+  Fnew = VariableElimination(F, non_parents_U);
+  Fnew = [Fnew U];
+  
+  Product_remaining_factors = Fnew(1);
+  for factor_index = 2:length(Fnew)
+    Product_remaining_factors = FactorProduct(Product_remaining_factors, Fnew(factor_index));
+  end;
+  
+  EU = sum([Product_remaining_factors.val]);
   %
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
