@@ -15,9 +15,21 @@ function EUF = CalculateExpectedUtilityFactor( I )
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %
   % YOUR CODE HERE...
+  
+  Decision_Factor = I.DecisionFactors
+  Factors = [I.RandomFactors I.UtilityFactors];
+  
+  non_parents_D = setdiff(unique([Factors(:).var]), [Decision_Factor.var]);
+  
+  Factors_Product = Factors(1);
+  for factor_index = 2:length(Factors)
+      Factors_Product = FactorProduct(Factors_Product,Factors(factor_index));
+  end;
+  
+  EUF = FactorMarginalization(Factors_Product, non_parents_D);
+  
   %
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
-
-
+  
   
 end  
