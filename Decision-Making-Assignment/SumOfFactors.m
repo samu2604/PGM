@@ -26,6 +26,9 @@ assignments = IndexToAssignment(1:length(Fsum.val), Fsum.card);
 index_of_F1_values = AssignmentToIndex(assignments(:, mapF1), F1.card);
 index_of_F2_values = AssignmentToIndex(assignments(:, mapF2), F2.card);
 
+% I sum the values corresponding to the specific assignment for the corresponding factors
+% Factor.val([list of indeces]) gives back the corresponding list of values of length length([list of indeces])  
+
 Fsum.val = F1.val(index_of_F1_values) + F2.val(index_of_F2_values);
 
 end
