@@ -1,15 +1,8 @@
 
 function Fsum = SumOfFactors(F1, F2)
 
-if (length(F1.var) == 0)
-  sum = F2;
-  return;
-end;
-
-if (length(F2.var) == 0)
-  sum = F1;
-  return;
-end;
+if (length(F1.var) == 0), Fsum = F2; return; end;
+if (length(F2.var) == 0), Fsum = F1; return; end;
 
 Fsum.var = union(F1.var, F2.var);
 
