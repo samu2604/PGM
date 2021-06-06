@@ -48,7 +48,7 @@ used_factors = zeros(size(C.factorList));
 
 for i = 1:N
 
-    P.cliqueList(i).var = C.nodes{i};
+    P.cliqueList(i).var = C.nodes{i}(:)';
     P.cliqueList(i).card = cards(C.nodes{i});
 
     tmpFactor = struct('var', [], 'card', [], 'val', []);

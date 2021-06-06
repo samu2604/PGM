@@ -37,6 +37,23 @@ MESSAGES = repmat(struct('var', [], 'card', [], 'val', []), N, N);
 %
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+[i, j] = GetNextCliques(P, MESSAGES);
+
+while i ~= 0 && j ~= 0
+    messageIndices = setdiff(find(P.edges(i, :) == 1), j); % all those that are connected with i, but not with j
+    MESSAGES(i, j) = P.cliqueList(i);
+    for k = 1:length(messageIndices)
+        MESSAGES(i, j) = FactorProduct(MESSAGES(i, j), MESSAGES(messageIndices(k), i));
+    end
+    % the message sent from i to j "talks" only about the variables shared by both, clique i and j, so the message
+    % from i to j has to be marginalized on the vars of Clique i that are not in Clique j
+    vars_to_marginalize = setdiff(P.cliqueList(i).var, P.cliqueList(j).var);
+    MESSAGES(i, j) = FactorMarginalization(MESSAGES(i, j), vars_to_marginalize);
+    if ~isMax
+        MESSAGES(i, j).val = MESSAGES(i, j).val / sum(MESSAGES(i, j).val);  % factor normalization
+    end
+    [i, j] = GetNextCliques(P, MESSAGES);
+end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % YOUR CODE HERE
@@ -45,6 +62,16 @@ MESSAGES = repmat(struct('var', [], 'card', [], 'val', []), N, N);
 % Compute the final potentials for the cliques and place them in P.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Iterate through the incoming messages, multiply them by the initial
+% potential, and normalize
+for i = 1:N
+    connected_to_i = find(P.edges(i, :) == 1);
+    for k = 1:length(connected_to_i)
+        if ~isMax
+            P.cliqueList(i) = FactorProduct(P.cliqueList(i), MESSAGES(connected_to_i(k), i));
+        end
+    end
+end
 
 
 return
