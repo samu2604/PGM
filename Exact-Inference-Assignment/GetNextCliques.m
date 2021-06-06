@@ -34,6 +34,25 @@ j = 0;
 % YOUR CODE HERE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+for k = 1:length(P.cliqueList)
+    for l = 1:length(P.cliqueList)
+        if P.edges(k, l) == 1 && isempty(messages(k, l).var)
+            % the message between k and l still needs to be sent, let's see if all messages has been sent to k first
+            messageIndexes = setdiff(find(P.edges(:, k) == 1), l); % all those that are connected with k, but l
+            are_all_messages_to_k_passed = true;
+            for m = 1:length(messageIndexes)
+                if isempty(messages(messageIndexes(m), k).var)
+                   are_all_messages_to_k_passed = false; 
+                end
+            end
 
+            if are_all_messages_to_k_passed
+                i = k;
+                j = l;
+                return;
+            end
+        end
+    end
+end
 
 return;
