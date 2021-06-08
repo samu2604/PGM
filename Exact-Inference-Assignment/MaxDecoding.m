@@ -19,12 +19,18 @@ function A = MaxDecoding( M )
 
 % initialization
 % you should set it to the correct value in your code
-A = [];
+A = zeros(1, length(M));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % YOUR CODE HERE
 % Compute the best assignment for variables in the network.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+for i = 1:length(A)
+    [log_plausibility, MAP_assignment_for_variable_i] = max(M(i).val);
+    A(i) = MAP_assignment_for_variable_i;
+end
+
 
 end
 

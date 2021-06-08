@@ -37,6 +37,8 @@ for i = 1:length(all_vars)
             if ~isMax
                 M(i) = FactorMarginalization(P.cliqueList(j), setdiff(P.cliqueList(j).var, all_vars(i)));
                 M(i).val = M(i).val / sum(M(i).val);
+            else
+                M(i) = FactorMaxMarginalization(P.cliqueList(j), setdiff(P.cliqueList(j).var, all_vars(i)));
             end
             break
         end
